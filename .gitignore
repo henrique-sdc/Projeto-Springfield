@@ -52,8 +52,3 @@ Thumbs.db
 # Dependências do Maven
 .mvn/
 !mvn/wrapper/maven-wrapper.jar
-
-# Credenciais do banco de dados e configurações locais
-application.properties
-application.yml
-.env
