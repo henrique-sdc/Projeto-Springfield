@@ -1,7 +1,7 @@
-package com.springfield.controller;
+package com.springfield.springfield_api.controller;
 
 import com.springfield.springfield_api.model.Cidadao;
-import com.springfield.service.CidadaoService;
+import com.springfield.springfield_api.service.CidadaoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

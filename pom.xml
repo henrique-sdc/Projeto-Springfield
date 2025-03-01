@@ -77,12 +77,13 @@
 			<artifactId>spring-cloud-azure-starter</artifactId>
 		</dependency>
 
-		<!-- Driver do PostgreSQL (mantido conforme o seu código) -->
+		<!-- Driver do MySQL -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 
 		<!-- Lombok para reduzir boilerplate code -->
 		<dependency>

@@ -1,7 +1,7 @@
-package com.springfield.service;
+package com.springfield.springfield_api.service;
 
 import com.springfield.springfield_api.model.Cidadao;
-import com.springfield.repository.CidadaoRepository;
+import com.springfield.springfield_api.repository.CidadaoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
