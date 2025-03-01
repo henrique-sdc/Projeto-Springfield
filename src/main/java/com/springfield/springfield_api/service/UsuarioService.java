@@ -2,7 +2,6 @@ package com.springfield.springfield_api.service;
 
 import com.springfield.springfield_api.model.Usuario;
 import com.springfield.springfield_api.repository.UsuarioRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,11 +11,9 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public Usuario cadastrarUsuario(Usuario usuario) {
@@ -25,8 +22,8 @@ public class UsuarioService {
             throw new RuntimeException("Já existe um usuário cadastrado para esse cidadão.");
         }
 
-        // Criptografa a senha antes de salvar
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        // Remove a criptografia da senha
+        usuario.setSenha(usuario.getSenha());
         usuario.setTentativasFalhas(0);
         usuario.setBloqueado(false);
         usuario.setUltimoLogin(LocalDateTime.now());
@@ -46,7 +43,7 @@ public class UsuarioService {
             throw new RuntimeException("Usuário bloqueado. Solicite o desbloqueio.");
         }
 
-        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+        if (!usuario.getSenha().equals(senha)) { // Sem criptografia
             usuario.setTentativasFalhas(usuario.getTentativasFalhas() + 1);
             if (usuario.getTentativasFalhas() >= 3) {
                 usuario.setBloqueado(true);
@@ -75,7 +72,7 @@ public class UsuarioService {
         }
 
         Usuario usuario = usuarioOpt.get();
-        usuario.setSenha(passwordEncoder.encode(novaSenha));
+        usuario.setSenha(novaSenha); // Sem criptografia
         usuario.setUltimoLogin(LocalDateTime.now()); // Atualiza o login para evitar novo bloqueio
         usuarioRepository.save(usuario);
 

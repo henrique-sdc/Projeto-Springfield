@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "", allowedHeaders = "")
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
@@ -17,6 +18,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PostMapping("/cadastro")
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
         try {
@@ -26,6 +28,7 @@ public class UsuarioController {
         }
     }
 
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PostMapping("/login")
     public ResponseEntity<?> realizarLogin(@RequestBody Map<String, String> credenciais) {
         try {
@@ -36,6 +39,7 @@ public class UsuarioController {
         }
     }
 
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PutMapping("/{id}/trocar-senha")
     public ResponseEntity<?> trocarSenha(@PathVariable Long id, @RequestBody Map<String, String> request) {
         try {
@@ -46,6 +50,7 @@ public class UsuarioController {
         }
     }
 
+    @CrossOrigin(origins = "", allowedHeaders = "")
     @PutMapping("/{id}/desbloquear")
     public ResponseEntity<?> desbloquearUsuario(@PathVariable Long id) {
         try {
