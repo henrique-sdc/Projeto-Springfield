@@ -10,7 +10,7 @@ import java.util.Map;
 import java.time.LocalDateTime;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Permitir CORS de qualquer origem
+@CrossOrigin(origins = "*", allowedHeaders = "*") 
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
@@ -25,9 +25,9 @@ public class UsuarioController {
     public ResponseEntity<?> cadastrarUsuario(@RequestBody Usuario usuario) {
         try {
             Usuario novoUsuario = usuarioService.cadastrarUsuario(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario); // Retorna 201 Created
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", e.getMessage())); // Retorna erro com mensagem
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", e.getMessage())); 
         }
     }
 
@@ -36,7 +36,6 @@ public class UsuarioController {
         try {
             Usuario usuario = usuarioService.realizarLogin(credenciais.get("username"), credenciais.get("senha"));
 
-            //Verifica se precisa trocar a senha
              if (usuario.getUltimoLogin() != null && usuario.getUltimoLogin().isBefore(LocalDateTime.now().minusDays(30))) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("erro", "Troca de senha obrigatória."));
             }
@@ -45,7 +44,7 @@ public class UsuarioController {
             return ResponseEntity.ok(Map.of("mensagem", "Login realizado com sucesso!", "usuario", usuario));
         } catch (RuntimeException e) {
              if (e.getMessage().equals("Usuário bloqueado. Solicite o desbloqueio.")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("erro", e.getMessage())); // 401 Unauthorized
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("erro", e.getMessage()));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", e.getMessage()));
             }
@@ -64,7 +63,7 @@ public class UsuarioController {
             return ResponseEntity.ok(Map.of("mensagem", "Senha alterada com sucesso!", "usuario", usuario));
         } catch (RuntimeException e) {
               if(e.getMessage().equals("A troca de senha não é obrigatória agora.")){
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("erro", e.getMessage())); //403 Forbidden
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("erro", e.getMessage())); 
               }
             return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
         }
