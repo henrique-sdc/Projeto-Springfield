@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "CAD_USUARIO")
+@Table(name = "CAD_USUARIO_CIDADAO")
 @Data
 public class Usuario {
 
@@ -13,16 +13,12 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Caso queira associar com um cidadão:
+    @Column(name = "CIDADAO_ID")
     private Integer idCidadao;
 
     private String username;
-
-    private String senha; // armazene o hash da senha
-
+    private String senha;
     private int tentativasFalhas;
-
     private LocalDateTime ultimoLogin;
-
     private boolean bloqueado;
 }

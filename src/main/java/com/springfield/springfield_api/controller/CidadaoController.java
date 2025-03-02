@@ -24,7 +24,7 @@ public class CidadaoController {
         return cidadaoService.listarTodos();
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<Cidadao> buscarPorId(@PathVariable Integer id) {
         Optional<Cidadao> cidadao = cidadaoService.buscarPorId(id);
@@ -36,7 +36,7 @@ public class CidadaoController {
         return cidadaoService.salvar(cidadao);
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin(origins = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Cidadao> atualizar(@PathVariable Integer id, @RequestBody Cidadao cidadao) {
         if (!cidadaoService.buscarPorId(id).isPresent()) {
@@ -46,7 +46,7 @@ public class CidadaoController {
         return ResponseEntity.ok(cidadaoService.salvar(cidadao));
     }
 
-    @CrossOrigin(origins = "", allowedHeaders = "")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         if (!cidadaoService.buscarPorId(id).isPresent()) {
