@@ -17,12 +17,10 @@ public class UsuarioService {
     }
 
     public Usuario cadastrarUsuario(Usuario usuario) {
-        // Verifica se já existe um usuário para o mesmo cidadão
-        if (usuarioRepository.existsByIdCidadao(usuario.getIdCidadao())) { // Corrigido
+        if (usuarioRepository.existsByIdCidadao(usuario.getIdCidadao())) { 
             throw new RuntimeException("Já existe um usuário cadastrado para esse cidadão.");
         }
 
-        // Removida a criptografia da senha.
         usuario.setSenha(usuario.getSenha());
         usuario.setTentativasFalhas(0);
         usuario.setBloqueado(false);
@@ -44,7 +42,6 @@ public class UsuarioService {
         }
 
 
-        //Verifica a senha
         if (!usuario.getSenha().equals(senha)) {
             usuario.setTentativasFalhas(usuario.getTentativasFalhas() + 1);
             if (usuario.getTentativasFalhas() >= 3) {
@@ -56,12 +53,9 @@ public class UsuarioService {
 
 
 
-        // Se o usuário ficou mais de 30 dias sem login, força troca de senha na PRÓXIMA requisição
         if (usuario.getUltimoLogin() != null && usuario.getUltimoLogin().isBefore(LocalDateTime.now().minusDays(30))) {
-           //NÃO FAZ NADA AQUI.  A troca é forçada no endpoint /trocar-senha
         }
 
-        // Resetar tentativas e atualizar o último login
         usuario.setTentativasFalhas(0);
         usuario.setUltimoLogin(LocalDateTime.now());
         usuarioRepository.save(usuario);
@@ -78,10 +72,9 @@ public class UsuarioService {
 
         Usuario usuario = usuarioOpt.get();
 
-          // Verifica se o usuário precisa trocar a senha (mais de 30 dias sem login)
         if (usuario.getUltimoLogin() != null && usuario.getUltimoLogin().isBefore(LocalDateTime.now().minusDays(30))) {
-              usuario.setSenha(novaSenha); // Sem criptografia (por enquanto)
-              usuario.setUltimoLogin(LocalDateTime.now()); // Atualiza o login
+              usuario.setSenha(novaSenha);
+              usuario.setUltimoLogin(LocalDateTime.now());
               usuarioRepository.save(usuario);
               return usuario;
         } else{
