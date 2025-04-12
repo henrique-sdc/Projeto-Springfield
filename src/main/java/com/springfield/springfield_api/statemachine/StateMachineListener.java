@@ -1,22 +1,15 @@
 package com.springfield.springfield_api.statemachine;
 
-import com.springfield.springfield_api.model.SolicitacaoHistorico;
-import com.springfield.springfield_api.repository.SolicitacaoHistoricoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
-import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.state.State;
-import org.springframework.statemachine.support.StateMachineUtils;
 import org.springframework.statemachine.transition.Transition;
 import org.springframework.statemachine.listener.StateMachineListenerAdapter;
 import org.springframework.stereotype.Component;
-import org.springframework.statemachine.support.StateMachineInterceptorAdapter;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Component
