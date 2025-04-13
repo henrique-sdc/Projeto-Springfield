@@ -1,15 +1,20 @@
 # Projeto Springfield API - Gerenciamento de Cidadãos
 
 ![Java](https://img.shields.io/badge/Java-17-blue.svg)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.3-green.svg)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.x-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)
 ![Lombok](https://img.shields.io/badge/Lombok-Usado-brightgreen.svg)
+![Spring State Machine](https://img.shields.io/badge/Spring-State%20Machine-blueviolet.svg)
+![Actuator/Prometheus](https://img.shields.io/badge/Micrometer-Prometheus-orange.svg)
+![OpenAPI](https://img.shields.io/badge/Docs-OpenAPI%203-informational.svg)
 
 ## 📌 Visão Geral
 
-Este projeto é uma API RESTful desenvolvida em Spring Boot para gerenciar o cadastro de cidadãos e usuários da cidade fictícia de Springfield. Ele fornece endpoints para operações CRUD (Create, Read, Update, Delete) e funcionalidades de autenticação.
+Este projeto é a API RESTful principal para gerenciar o cadastro de Cidadãos, controle de acesso de Usuários (login, bloqueio, etc.) e o ciclo de vida de Solicitações de serviço (usando Spring State Machine) para a cidade fictícia de Springfield. Ele também expõe métricas para Prometheus.
 
 > **Nota:** Inicialmente planejado para usar Azure SQL Server, mas foi implementado com MySQL local.
+
+> **Microsserviço de IPTU:** Para funcionalidades relacionadas ao IPTU (geração, consulta, pagamento), consulte o projeto `Microservice-IPTU` neste [link](https://github.com/henrique-sdc/Microservice-IPTU), que opera como um microsserviço separado.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -107,7 +112,30 @@ springfield-api/
 
 4. **Importe o projeto na sua IDE.**
 
+## ▶️ Executando a Plataforma Completa (API + IPTU)
+
+Para utilizar todas as funcionalidades, incluindo o serviço de IPTU, siga estes passos:
+
+1.  **Inicie este serviço (`springfield-api`):**
+    *   Navegue até a pasta `springfield-api`.
+    *   Execute pela IDE (classe `SpringfieldApiApplication`) ou via Maven:
+        ```bash
+        mvn spring-boot:run
+        ```
+    *   Este serviço estará disponível na porta `8080`.
+
+2.  **Inicie o serviço `iptu-service`:**
+    *   Navegue até a pasta `iptu-service`.
+    *   Certifique-se que ele está configurado (veja o `README.md` dentro de `iptu-service`).
+    *   Execute pela IDE (classe `IptuServiceApplication`) ou via Maven:
+        ```bash
+        mvn spring-boot:run
+        ```
+    *   Este serviço estará disponível na porta `8081` e se comunicará com o `springfield-api` na porta `8080`.
+
 ## 🚀 Testando a API (Postman)
+
+Use o Postman ou similar para interagir com a API. Uma coleção completa com mais cenários pode estar disponível no repositório.
 
 ### Cidadãos
 
@@ -189,6 +217,11 @@ springfield-api/
   ```http
   PUT http://localhost:8080/usuarios/{id}/desbloquear
   ```
+
+## 📜 Documentação e Métricas
+
+-   **Documentação OpenAPI (Swagger):** `http://localhost:8080/swagger-ui.html`
+-   **Métricas Prometheus:** `http://localhost:8080/actuator/prometheus`
 
 ## 📌 Melhorias Futuras
 
